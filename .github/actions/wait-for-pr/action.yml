@@ -1,5 +1,5 @@
 name: Wait for PR
-inputs:
+#inputs:
 
 runs:
   using: docker
