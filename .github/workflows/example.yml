@@ -6,5 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - id: pr
+        run: echo "::set-output name=prNumber::1"
+        shell: bash
       - name: My first step
         uses: ./.github/actions/wait-for-pr
+        with:
+          prNumber: ${{ steps.pr.outputs.prNumber }}

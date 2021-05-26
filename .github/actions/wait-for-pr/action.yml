@@ -1,6 +1,10 @@
 name: Wait for PR
-#inputs:
-
+inputs:
+  prNumber:
+    description: 'Number of the PR to wait for'
+    required: true
 runs:
   using: docker
   image: Dockerfile
+  args:
+    - ${{ inputs.prNumber }}
