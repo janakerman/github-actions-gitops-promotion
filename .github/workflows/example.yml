@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-paths:
-  - 'manifests/**'
+    paths:
+      - 'manifests/**'
 
 jobs:
   promote_to_test1:
@@ -13,7 +13,11 @@ jobs:
       - uses: actions/checkout@v1
       - name: Promote files to test1
         run: |
-          DIRS_CHANGED=$(git diff --dirstat=files,0 HEAD~1 | sed 's/^ [0-9.% ]*//g')
+          set -x
+
+          DIRS_CHANGED=$(git diff --dirstat=files,0 HEAD~1 | sed 's/^ [0-9.% ]*//g' | grep manifests)
+          echo "Dirs changed $DIRS_CHANGED"
+
           if [ `echo $DIRS_CHANGED | wc -l | awk '{print $1}'` -ge "1" ]; then
             echo "only 1 dir please"
             exit 1
