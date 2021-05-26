@@ -40,6 +40,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: refs/heads/promote-test1-${{ steps.random.outputs.random }}
       - name: pull-request
+        id: open-pr
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "main"
@@ -52,6 +53,6 @@ jobs:
         uses: ./.github/actions/wait-for-pr
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          prNumber: ${{steps.pull-request.outputs.pr_number}}
+          prNumber: ${{steps.open-pr.outputs.pr_number}}
           repo: github-actions-gitops-promotion
           owner: janakerman
