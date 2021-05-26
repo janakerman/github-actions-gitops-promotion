@@ -32,7 +32,7 @@ jobs:
           git add .
           git commit -m "Promote to test" -a
       - id: random
-        run: echo "::set-output name=random::1"
+        run: echo "::set-output name=random::$RANDOM"
         shell: bash
       - name: Push changes
         uses: ad-m/github-push-action@master
