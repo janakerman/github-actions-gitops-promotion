@@ -2,13 +2,12 @@ package main
 
 import (
 	"context"
-	"github.com/google/go-github/v35/github"
-    "fmt"
-	"golang.org/x/oauth2"
 	"log"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/google/go-github/v35/github"
 )
 
 func main() {
