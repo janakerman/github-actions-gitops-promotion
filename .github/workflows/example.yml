@@ -23,7 +23,7 @@ jobs:
             exit 1
           fi;
 
-          mkdir -p promoted/test/ || true
+          mkdir -p promoted/test1/ || true
           cp -r $DIRS_CHANGED promoted/test/
       - name: Commit files
         run: |
