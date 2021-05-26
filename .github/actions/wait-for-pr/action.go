@@ -11,20 +11,18 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 1 {
-		log.Fatal("Unexpected number of arguments")
-	}
-	prNum, err := strconv.Atoi(os.Getenv("INPUT_PRNUMBER"))
+	prNumString := os.Getenv("INPUT_PRNUMBER")
+	prNum, err := strconv.Atoi(prNumString)
 	if err != nil {
-		log.Fatalf("INPUT_PRNUMBER is not a number")
+		log.Fatalf("INPUT_PRNUMBER %s is not a number", prNumString)
 	}
 	owner := os.Getenv("INPUT_OWNER")
 	if owner == "" {
-		log.Fatalf("INPUT_OWNER is a required value")
+		log.Fatalf("INPUT_OWNER %s is a required value", owner)
 	}
 	repo := os.Getenv("INPUT_REPO")
 	if repo == "" {
-		log.Fatalf("INPUT_REPO is a required value")
+		log.Fatalf("INPUT_REPO %s is a required value", repo)
 	}
 
 	client := github.NewClient(nil)
