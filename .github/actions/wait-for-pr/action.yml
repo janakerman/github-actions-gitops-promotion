@@ -3,8 +3,20 @@ inputs:
   prNumber:
     description: 'Number of the PR to wait for'
     required: true
+  repo:
+    description: 'Repo'
+    required: true
+  owner:
+    description: 'Owner'
+    required: true
+  githubToken:
+    description: 'Github token'
+    required: true
 runs:
   using: docker
   image: Dockerfile
-  args:
-    - ${{ inputs.prNumber }}
+  env:
+    REPO: ${{ inputs.repo }}
+    OWNER: ${{ inputs.owner }}
+    PR_NUM: ${{ inputs.prNumber }}
+    GITHUB_TOKEN: ${{ inputs.githubToken }}

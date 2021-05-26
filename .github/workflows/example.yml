@@ -12,4 +12,7 @@ jobs:
       - name: My first step
         uses: ./.github/actions/wait-for-pr
         with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
           prNumber: ${{ steps.pr.outputs.prNumber }}
+          repo: github-actions-gitops-promotion
+          owner: janakerman
