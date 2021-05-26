@@ -1,0 +1,6 @@
+name: Wait for PR
+inputs:
+
+runs:
+  using: docker
+  image: Dockerfile
