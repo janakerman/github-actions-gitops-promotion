@@ -45,7 +45,10 @@ jobs:
           destination_branch: "main"
           source_branch: promote-to-test1
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: My first step
+      - id: debug
+        run: echo ${{steps.pull-request.outputs.pr_number}}
+        shell: bash
+      - name: Wait for PR merge
         uses: ./.github/actions/wait-for-pr
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
