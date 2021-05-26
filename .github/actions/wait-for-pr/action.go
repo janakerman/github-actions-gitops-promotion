@@ -38,7 +38,7 @@ func main() {
 			if pr.GetState() == "closed" {
 				if pr.GetMerged() {
 					log.Printf("PR has been merged.")
-					break
+					os.Exit(0)
 				} else {
 					log.Fatalf("PR closed without merging!")
 				}
