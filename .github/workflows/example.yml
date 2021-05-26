@@ -24,7 +24,7 @@ jobs:
           fi;
 
           mkdir -p promoted/test1/ || true
-          cp -r $DIRS_CHANGED promoted/test/
+          cp -r $DIRS_CHANGED promoted/test1/
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -35,14 +35,17 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-      - id: pr
-        run: echo "::set-output name=prNumber::1"
-        shell: bash
+          branch: promote-to-test1
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "main"
+          source_branch: promote-to-test1
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: My first step
         uses: ./.github/actions/wait-for-pr
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          prNumber: ${{ steps.pr.outputs.prNumber }}
+          prNumber: ${{steps.pull-request.outputs.pr_number}}
           repo: github-actions-gitops-promotion
           owner: janakerman
