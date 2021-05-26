@@ -1,5 +1,7 @@
 name: use my action
 on: [push]
+paths:
+  - 'manifests/**'
 
 jobs:
   my_first_job:
