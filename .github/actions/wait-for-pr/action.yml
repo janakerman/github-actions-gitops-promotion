@@ -15,8 +15,8 @@ inputs:
 runs:
   using: docker
   image: Dockerfile
-  env:
-    REPO: ${{ inputs.repo }}
-    OWNER: ${{ inputs.owner }}
-    PR_NUM: ${{ inputs.prNumber }}
-    GITHUB_TOKEN: ${{ inputs.githubToken }}
+#  env:
+#    REPO: ${{ inputs.repo }}
+#    OWNER: ${{ inputs.owner }}
+#    PR_NUM: ${{ inputs.prNumber }}
+#    GITHUB_TOKEN: ${{ inputs.githubToken }}
