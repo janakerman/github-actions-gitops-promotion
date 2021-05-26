@@ -14,17 +14,17 @@ func main() {
 	if len(os.Args) != 1 {
 		log.Fatal("Unexpected number of arguments")
 	}
-	prNum, err := strconv.Atoi(os.Getenv("PR_NUM"))
+	prNum, err := strconv.Atoi(os.Getenv("INPUT_PRNUMBER"))
 	if err != nil {
-		log.Fatalf("Argument is not a number")
+		log.Fatalf("INPUT_PRNUMBER is not a number")
 	}
-	owner := os.Getenv("OWNER")
+	owner := os.Getenv("INPUT_OWNER")
 	if owner == "" {
-		log.Fatalf("OWNER is a required value")
+		log.Fatalf("INPUT_OWNER is a required value")
 	}
-	repo := os.Getenv("REPO")
+	repo := os.Getenv("INPUT_REPO")
 	if repo == "" {
-		log.Fatalf("REPO is a required value")
+		log.Fatalf("INPUT_REPO is a required value")
 	}
 
 	client := github.NewClient(nil)
