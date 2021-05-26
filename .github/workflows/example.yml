@@ -44,15 +44,15 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "main"
-          source_branch: promote-to-test1
+          source_branch: promote-test1-${{ steps.random.outputs.random }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - id: debug
-        run: echo ${{steps.pull-request.outputs.pr_number}}
+        run: echo ${{ steps.open-pr.outputs.pr_number}}
         shell: bash
       - name: Wait for PR merge
         uses: ./.github/actions/wait-for-pr
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          prNumber: ${{steps.open-pr.outputs.pr_number}}
+          prNumber: ${{ steps.open-pr.outputs.pr_number}}
           repo: github-actions-gitops-promotion
           owner: janakerman
