@@ -35,7 +35,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: promote-to-test1
+          branch: refs/heads/promote-to-test1
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
