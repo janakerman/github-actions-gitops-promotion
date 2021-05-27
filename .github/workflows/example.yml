@@ -30,7 +30,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .
-          git commit -m "Promote to test" -a
+          git commit -m "Promote to test1" -a
       - id: random
         run: echo "::set-output name=random::$RANDOM"
         shell: bash
@@ -56,3 +56,102 @@ jobs:
           prNumber: ${{ steps.open-pr.outputs.pr_number}}
           repo: github-actions-gitops-promotion
           owner: janakerman
+  promote_to_test2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Promote files to test2
+        run: |
+          set -x
+
+          DIRS_CHANGED=$(git diff --dirstat=files,0 HEAD~1 | sed 's/^ [0-9.% ]*//g' | grep manifests)
+          echo "Dirs changed $DIRS_CHANGED"
+
+          if [ `echo $DIRS_CHANGED | wc -l | awk '{print $1}'` -ge "2" ]; then
+            echo "only 1 dir please"
+            exit 1
+          fi;
+
+          mkdir -p promoted/test2/ || true
+          cp -r $DIRS_CHANGED promoted/test2/
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Promote to test2" -a
+      - id: random
+        run: echo "::set-output name=random::$RANDOM"
+        shell: bash
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: refs/heads/promote-test2-${{ steps.random.outputs.random }}
+      - name: pull-request
+        id: open-pr
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "main"
+          source_branch: promote-test2-${{ steps.random.outputs.random }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - id: debug
+        run: echo ${{ steps.open-pr.outputs.pr_number}}
+        shell: bash
+      - name: Wait for PR merge
+        uses: ./.github/actions/wait-for-pr
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          prNumber: ${{ steps.open-pr.outputs.pr_number}}
+          repo: github-actions-gitops-promotion
+          owner: janakerman
+  promote_to_prod1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Promote files to prod1
+        run: |
+          set -x
+
+          DIRS_CHANGED=$(git diff --dirstat=files,0 HEAD~1 | sed 's/^ [0-9.% ]*//g' | grep manifests)
+          echo "Dirs changed $DIRS_CHANGED"
+
+          if [ `echo $DIRS_CHANGED | wc -l | awk '{print $1}'` -ge "2" ]; then
+            echo "only 1 dir please"
+            exit 1
+          fi;
+
+          mkdir -p promoted/prod1/ || true
+          cp -r $DIRS_CHANGED promoted/prod1/
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Promote to prod1" -a
+      - id: random
+        run: echo "::set-output name=random::$RANDOM"
+        shell: bash
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: refs/heads/promote-prod1-${{ steps.random.outputs.random }}
+      - name: pull-request
+        id: open-pr
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "main"
+          source_branch: promote-prod1-${{ steps.random.outputs.random }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - id: debug
+        run: echo ${{ steps.open-pr.outputs.pr_number}}
+        shell: bash
+      - name: Wait for PR merge
+        uses: ./.github/actions/wait-for-pr
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          prNumber: ${{ steps.open-pr.outputs.pr_number}}
+          repo: github-actions-gitops-promotion
+          owner: janakerman
+
