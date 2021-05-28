@@ -106,6 +106,7 @@ jobs:
           repo: github-actions-gitops-promotion
           owner: janakerman
   promote_to_prod1:
+    needs: [promote_to_test1, promote_to_test2]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
